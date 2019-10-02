@@ -104,8 +104,27 @@ df_ft['food_truck_present'] = df_ft.any(1)
 once_this_week_probability = df_ft.food_truck_present.mean()
 once_this_week_probability
 
-# 8.) If 23 people are in the same room, what are the odds that two of them share a birthday? What if it's 20 people? 40?
-birthdays = np.random.randint(1,365,(1,23))
+# 8.) If 23 people are in the same room, what are the odds that two of them share a birthday? 
+birthdays = np.random.randint(1,365,(1_000_000,23))
+df_birthdays = pd.DataFrame(birthdays)
+df_birthdays['uniques'] = (df_birthdays.nunique(1))
+df_birthdays['same_birthdays'] = df_birthdays.uniques != 23
+same_probability = df_birthdays.same_birthdays.mean()
+
+# What if it's 20 people?
+birthdays = np.random.randint(1,365,(1_000_000,20))
+df_birthdays = pd.DataFrame(birthdays)
+df_birthdays['uniques'] = (df_birthdays.nunique(1))
+df_birthdays['same_birthdays'] = df_birthdays.uniques != 20
+same_probability = df_birthdays.same_birthdays.mean()
+
+# What if it's 40 people?
+birthdays = np.random.randint(1,365,(1_000_000,40))
+df_birthdays = pd.DataFrame(birthdays)
+df_birthdays['uniques'] = (df_birthdays.nunique(1))
+df_birthdays['same_birthdays'] = df_birthdays.uniques != 40
+same_probability = df_birthdays.same_birthdays.mean()
+
 
 
 
