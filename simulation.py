@@ -57,16 +57,52 @@ taller_woman_probability
 
 # 6.) When installing anaconda on a student's computer, there's a 1 in 250 chance that the download is corrupted and the installation fails. 
 # What are the odds that after having 50 students download anaconda, no one has an installation issue? 
-# 100 students?
-# What is the probability that we observe an installation issue within the first 150 students that download anaconda?
-# How likely is it that 450 students all download anaconda without an issue?
-p_corrupt = 1/250
-n_installs = 50
-download = np.random.choice([0, 1], n_installs).reshape(n_trials, n_flips)
+fifty_data = np.random.random((1_000_000,50))
+not_corrupted = fifty_data > (1/250)
+df_not_corrupted = pd.DataFrame(not_corrupted)
+df_not_corrupted['none_corrupted'] = df_not_corrupted.all(1)
+none_corrupted_probability = df_not_corrupted.none_corrupted.mean()
+none_corrupted_probability
 
+# 100 students?
+hundred_data = np.random.random((1_000_000,100))
+not_corrupted = hundred_data > (1/250)
+df_not_corrupted = pd.DataFrame(not_corrupted)
+df_not_corrupted['none_corrupted'] = df_not_corrupted.all(1)
+none_corrupted_probability = df_not_corrupted.none_corrupted.mean()
+none_corrupted_probability
+
+# What is the probability that we observe an installation issue within the first 150 students that download anaconda?
+first_one_fifty_data = np.random.random((1_000_000,150))
+corrupted = first_one_fifty_data < (1/250)
+df_corrupted = pd.DataFrame(corrupted)
+df_corrupted['at_least_one_corrupted'] = df_corrupted.any(1)
+one_corrupted_probability = df_corrupted.at_least_one_corrupted.mean()
+one_corrupted_probability
+
+# How likely is it that 450 students all download anaconda without an issue?
+four_fifty_data = np.random.random((1_000_000,450))
+lucky = four_fifty_data > (1/250)
+df_lucky = pd.DataFrame(lucky)
+df_lucky['none_corrupted'] = df_lucky.all(1)
+no_corrupted_probability = df_lucky.none_corrupted.mean()
+no_corrupted_probability
 
 # 7.) There's a 70% chance on any given day that there will be at least one food truck at Travis Park. However, you haven't seen a food truck there in 3 days. How unlikely is this?
 # How likely is it that a food truck will show up sometime this week?
+data = np.random.random((1_000_000,3))
+ft = data > .7
+df_ft = pd.DataFrame(ft)
+df_ft['food_truck_present'] = df_ft.any(1)
+three_days_missing_probability = df_ft.food_truck_present.mean()
+three_days_missing_probability
+
+data2 = np.random.random((1_000_000,7))
+ft_present = data2 <= .7
+df_ft = pd.DataFrame(ft_present)
+df_ft['food_truck_present'] = df_ft.any(1)
+once_this_week_probability = df_ft.food_truck_present.mean()
+once_this_week_probability
 
 # 8.) If 23 people are in the same room, what are the odds that two of them share a birthday? What if it's 20 people? 40?
 birthdays = np.random.randint(1,365,(1,23))
