@@ -1,5 +1,9 @@
 from scipy import stats
 from scipy.stats import norm, binom
+import numpy as np
+import pandas as pd
+
+
 
 # 1.) A bank found that the average number of cars waiting during the noon hour at a drive-up window follows a Poisson distribution with a mean of 2 cars. Make a chart of this distribution and answer these questions concerning the probability of cars waiting at the drive-up window.
 cars_distribution = stats.poisson(2)
@@ -72,6 +76,27 @@ uncleaned_seven_days = (1-(cleaned_distribution.sf(.9))) ** 7
 # After several weeks of careful observation, you notice that the average number of people in line when your lunch break starts is normally distributed with a mean of 15 and standard deviation of 3. 
 # If it takes 2 minutes for each person to order, and 10 minutes from ordering to getting your food, what is the likelihood that you have at least 15 minutes left to eat your food before you have to go back to class? 
 # Assume you have one hour for lunch, and ignore travel time to and from La Panaderia.
+
+line = norm(15,3)
+line.cdf(17)
+#.748
+
+
+
+
+
+
+# 7.) Connect to the employees database and find the average salary of current employees, along with the standard deviation. Model the distribution of employees salaries with a normal distribution and answer the following questions:
+
+url = f'mysql+pymysql://{user}:{password}@{host}/employees'
+
+df = pd.read_sql('SELECT * FROM employees LIMIT 5 OFFSET 50', url)
+
+# What percent of employees earn less than 60,000?
+# What percent of employees earn more than 95,000?
+# What percent of employees earn between 65,000 and 80,000?
+# What do the top 5% of employees make?
+
 
 
 
